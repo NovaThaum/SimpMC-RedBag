@@ -1,0 +1,23 @@
+name: SimpMC-RedBag
+version: '${project.version}'
+main: cn.simpmc.redbag.SimpMCRedBag
+api-version: '1.21'
+authors: [Minecraft0122, SimpMC, GPT-5.6]
+description: Exact-cent red packets with configurable tax for SimpMC.
+depend: [Vault]
+folia-supported: true
+
+commands:
+  redbag:
+    description: 发送、领取和管理 SimpMC 红包
+    usage: /redbag <send|open|claim|help>
+    aliases: [hongbao, redpacket, simpmcred]
+    permission: simpmc.redbag.use
+
+permissions:
+  simpmc.redbag.use:
+    description: 允许使用 SimpMC-RedBag
+    default: true
+  simpmc.redbag.admin:
+    description: 允许重载配置和查看红包状态
+    default: op

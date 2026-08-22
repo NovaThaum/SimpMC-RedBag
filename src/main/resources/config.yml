@@ -1,0 +1,98 @@
+# SimpMC-RedBag 配置
+# 金额始终按两位小数处理，并使用整数分进行红包分配。
+
+redpacket:
+  # 玩家输入的红包本金 x 的最低值
+  min-total-amount: 1.00
+  # 单个红包最多的包数
+  max-packet-count: 50
+  # 红包过期后，未领取本金退回发起人（分钟）
+  expiration-minutes: 5
+  # 单个红包的最低金额。当前货币精度为 0.01。
+  min-single-amount: 0.01
+  # 聊天输入会话的有效期（秒）
+  creation-timeout-seconds: 300
+
+tax:
+  # y。0.10 代表 10%，发送者实际支付 x * (1 + y)，按货币两位小数四舍五入。
+  rate: 0.10
+  # 税款直接存入此 Vault 账户。
+  recipient: Minecraft0122
+
+anti-abuse:
+  # 同一玩家成功发包后的冷却时间（秒）；0 表示关闭。
+  send-cooldown-seconds: 3
+  # 同一玩家同时存在的红包数量上限。
+  max-active-per-sender: 5
+
+messages:
+  prefix: '&6[SimpMC-RedBag] &r'
+  gui:
+    main-title: '&c&lSimpMC 红包'
+  chat:
+    packet-sent: '&e{player} &f发了一个&c【{type}】&f红包，&a[点击领取]'
+    packet-claimed: '&e{claimer} &f领了 &e{sender} &f的&c【{type}】&f红包，金额 &a{amount}'
+    packet-expired: '&6您的红包已过期，退还本金 &a{amount} &6到您的账户。'
+    tax-collected: '&7本次税款 &e{tax} &7已转入 &e{recipient} &7账户。'
+  errors:
+    no-permission: '&c您没有权限使用此命令！'
+    player-only: '&c此命令只能由玩家执行！'
+    economy-disabled: '&c经济系统未启用，请联系管理员。'
+    insufficient-funds: '&c余额不足！需要 &e{amount}&c（含税）。'
+    invalid-amount: '&c请输入有效的正数金额（最多两位小数）。'
+    invalid-count: '&c请输入有效的正整数份数。'
+    amount-too-low: '&c红包本金不能低于 &e{min}&c。'
+    count-too-high: '&c红包份数不能超过 &e{max}&c。'
+    count-too-large-for-amount: '&c本金 &e{amount}&c 只能分成最多 &e{max}&c 份，每份至少 0.01。'
+    already-claimed: '&c您已经领取过这个红包了！'
+    cannot-claim-own: '&c不能领取自己发出的红包！'
+    packet-not-found: '&c红包不存在或已过期！'
+    packet-complete: '&c红包已被领完！'
+    send-cooldown: '&c请等待 &e{seconds}&c 秒后再发红包。'
+    too-many-active: '&c您同时存在的红包不能超过 &e{max}&c 个。'
+    tax-failed: '&c税款转账失败，红包未创建，请稍后重试。'
+    config-invalid: '&c配置无效，插件无法启用。'
+    operation-failed: '&c操作失败，请联系管理员。'
+  success:
+    packet-created: '&a成功创建红包！输入本金: &6{amount} &a，余数退回: &6{returned} &a，含税支付: &6{charged} &a，份数: &e{count}'
+    packet-claimed: '&a恭喜！您领取了 &6{amount} &a的红包！'
+    config-reloaded: '&a配置文件重载成功！'
+    cancelled: '&7已取消红包创建。'
+  prompts:
+    enter-amount: '&e请输入红包本金（不含税）：'
+    enter-count: '&e请在聊天栏输入红包份数：'
+    cancel-hint: '&7输入 cancel 取消操作'
+  help:
+    header: '&e=== SimpMC-RedBag 帮助 ==='
+    send: '&7/redbag send <金额> <份数> [normal|lucky] &f- 直接发红包'
+    open: '&7/redbag open &f- 打开红包 GUI'
+    claim: '&7/redbag claim <ID> &f- 领取红包'
+    help: '&7/redbag help &f- 显示帮助'
+    reload: '&7/redbag reload &f- 重载配置（管理员）'
+    info: '&7/redbag info &f- 查看状态（管理员）'
+
+items:
+  normal-packet:
+    material: RED_WOOL
+    name: '&c&l普通红包'
+    lore:
+      - '&7点击发送普通红包'
+      - '&7每份金额相同，多余余数退回发起人'
+      - ''
+      - '&e点击选择'
+    slot: 11
+  lucky-packet:
+    material: GOLD_INGOT
+    name: '&6&l拼手气红包'
+    lore:
+      - '&7点击发送拼手气红包'
+      - '&7随机分配，但总和始终精确等于本金'
+      - ''
+      - '&e点击选择'
+    slot: 15
+  decoration:
+    material: BLACK_STAINED_GLASS_PANE
+    name: ' '
+    lore: []
+
+debug: false
